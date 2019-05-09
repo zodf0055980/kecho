@@ -73,6 +73,7 @@ static int echo_server_worker(void *arg)
     }
 
     while (!kthread_should_stop()) {
+        memset(buf, 0, BUF_SIZE);
         res = get_request(sock, buf, BUF_SIZE - 1);
         if (res <= 0) {
             if (res) {
@@ -88,8 +89,8 @@ static int echo_server_worker(void *arg)
         }
     }
 
-    res = get_request(sock, buf, BUF_SIZE - 1);
-    res = send_request(sock, buf, strlen(buf));
+    // res = get_request(sock, buf, BUF_SIZE - 1);
+    // res = send_request(sock, buf, strlen(buf));
 
     kernel_sock_shutdown(sock, SHUT_RDWR);
     sock_release(sock);
